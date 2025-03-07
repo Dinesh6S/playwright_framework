@@ -3,10 +3,20 @@ import os
 
 import pytest
 import yaml
+import logging
 from playwright.sync_api import sync_playwright
 from utilities.pageInitializing import PageInitializer
 
 env = ''
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("test.log", mode="w"),
+        logging.StreamHandler()
+    ]
+)
 
 @pytest.fixture(scope="session")
 def playwright_instance():
@@ -51,6 +61,6 @@ def pytest_addoption(parser):
     parser.addoption(
         "--ENV",
         action="store",
-        default="uat",
+        default="prod",
         help="An example runtime argument"
     )
